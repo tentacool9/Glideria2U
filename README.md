@@ -8,4 +8,5 @@ Now... You dont need to worry!
 <img src="https://media.istockphoto.com/photos/collection-of-ice-cream-scoop-sundae-cone-in-a-row-picture-id970023652?k=20&m=970023652&s=612x612&w=0&h=3kmljOrhyArdvkLO4xpXZ2v_ZNJQjhBNAR-0PWOWwlE=" alt="My cool logo"/>
 
 Application Preview
+<br><\br>
 <img src="https://cdn.dribbble.com/users/7914/screenshots/5418789/icecream.gif" alt="My cool logo"/>

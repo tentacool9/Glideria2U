@@ -10,6 +10,11 @@ public class Customer extends Person{
         this.deliveryAddress = deliveryAddress;
     }
 
+    public Customer(Customer customer) {
+        super(customer.getId(),customer.getName());
+        this.phoneNumber = customer.getPhoneNumber();
+        this.deliveryAddress = customer.getDeliveryAddress();
+    }
     public String getPhoneNumber() {
         return phoneNumber;
     }

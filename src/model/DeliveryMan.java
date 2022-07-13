@@ -10,6 +10,11 @@ public class DeliveryMan extends Person{
         this.salary = salary;
     }
 
+    public DeliveryMan(DeliveryMan deliveryMan) {
+        super(deliveryMan.getId(), deliveryMan.getName());
+        this.salary = deliveryMan.getSalary();
+    }
+
     public int getSalary() {
         return salary;
     }

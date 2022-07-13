@@ -39,4 +39,7 @@ public class LoginSession {
         }
     }
 
+    public Person getUser() {
+        return user;
+    }
 }

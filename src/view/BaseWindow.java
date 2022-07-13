@@ -1,27 +1,37 @@
 package src.view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.util.Collection;
 
-public class BaseWindow {
-    private JFrame f;
+public class BaseWindow extends JFrame {
+    protected int windowPadding = 10;
 
-    public BaseWindow() {
-        f = new JFrame("Basic Window");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public BaseWindow(String title) {
+        super(title);
+        this.setLayout(new BorderLayout());
 
-        //Add the ubiquitous "Hello World" label.
-        JLabel label = new JLabel("Hello World");
-        f.getContentPane().add(label);
+        JPanel contentPanel = new JPanel();
 
-
-        f.setSize(300, 300);
+        Border padding = BorderFactory.createEmptyBorder(windowPadding, windowPadding, windowPadding, windowPadding);
+        contentPanel.setBorder(padding);
+        this.setContentPane(contentPanel);
     }
 
-    public void show() {
-        f.setVisible(true);
+    protected void addComponent(JComponent component) {
+        this.getContentPane().add(component);
     }
 
-    public void hide() {
-        f.setVisible(false);
+    protected void addComponents(Collection<JComponent> components) {
+        components.forEach((component) -> {
+           addComponent(component);
+        });
+    }
+
+    public void showWindow() {
+        this.pack();
+        setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 }

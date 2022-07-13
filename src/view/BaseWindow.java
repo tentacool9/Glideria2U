@@ -3,18 +3,13 @@ package src.view;
 import javax.swing.*;
 
 public class BaseWindow {
-    private JFrame f;
+    protected JFrame f;
 
-    public BaseWindow() {
-        f = new JFrame("Basic Window");
+    public BaseWindow(String title) {
+        f = new JFrame(title);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Add the ubiquitous "Hello World" label.
-        JLabel label = new JLabel("Hello World");
-        f.getContentPane().add(label);
-
-
-        f.setSize(300, 300);
+        f.setSize(1000, 800);
     }
 
     public void show() {

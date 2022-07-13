@@ -2,15 +2,15 @@ package src.logic;
 
 import src.model.DeliveryMan;
 import src.model.Order;
+import src.logic.OrdersLogic;
+import java.util.ArrayList;
 
-public class DeliveryManLogic {
+public class DeliveryManLogic extends UserLogic{
     private DeliveryMan deliveryMan;
+    private OrdersLogic ordersLogic;
     public DeliveryManLogic(LoginSession loginSession) {
-        deliveryMan = (DeliveryMan) loginSession.getUser();
-    }
-
-    public Order[]  getAllOrders() {
-        return null;
+        super(loginSession);
+        this.deliveryMan = (DeliveryMan) loginSession.getUser();
     }
 
 }

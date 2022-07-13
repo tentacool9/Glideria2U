@@ -10,13 +10,13 @@ public class Order {
     private DeliveryMan deliveryMan;
 
     public Order(float totalPrice, Customer customer,
-                 Item[] items, int orderId,
+                 Item[] items,
                  String orderAddress, String orderTimeStamp,
                  DeliveryMan deliveryMan) {
         this.totalPrice = totalPrice;
         this.customer = customer;
         this.items = items;
-        this.orderId = orderId;
+        this.orderId = (int)Math.round(Math.random() * 100000);
         this.orderAddress = orderAddress;
         this.orderTimeStamp = orderTimeStamp;
         this.deliveryMan = deliveryMan;

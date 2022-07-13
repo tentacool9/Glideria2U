@@ -1,22 +1,37 @@
 package src.view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.util.Collection;
 
-public class BaseWindow {
-    protected JFrame f;
+public class BaseWindow extends JFrame {
+    protected int windowPadding = 10;
 
     public BaseWindow(String title) {
-        f = new JFrame(title);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super(title);
+        this.setLayout(new BorderLayout());
 
-        f.setSize(1000, 800);
+        JPanel contentPanel = new JPanel();
+
+        Border padding = BorderFactory.createEmptyBorder(windowPadding, windowPadding, windowPadding, windowPadding);
+        contentPanel.setBorder(padding);
+        this.setContentPane(contentPanel);
     }
 
-    public void show() {
-        f.setVisible(true);
+    protected void addComponent(JComponent component) {
+        this.getContentPane().add(component);
     }
 
-    public void hide() {
-        f.setVisible(false);
+    protected void addComponents(Collection<JComponent> components) {
+        components.forEach((component) -> {
+           addComponent(component);
+        });
+    }
+
+    public void showWindow() {
+        this.pack();
+        setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 }

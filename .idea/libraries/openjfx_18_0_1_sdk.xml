@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="openjfx-18.0.1-sdk">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/openjfx-18.0.1-sdk.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,37 +1,28 @@
 package src.logic;
 
-import src.dal.DataBaseConnection;
-import src.model.Customer;
-import src.model.DeliveryMan;
-import src.model.Person;
-
-enum UserTypes {
-    CUSTOMER,
-    DELIVERYMAN
-}
+import src.common.model.User;
 
 public class LoginSession {
-    private Person user;
-    private Enum userType;
+    private static LoginSession session = null;
 
-    private DataBaseConnection dbConn;
+    private User user = null;
 
-    public LoginSession() {
-        this.dbConn = new DataBaseConnection();
+    private LoginSession() { }
+
+    public static LoginSession getSession() {
+        if (session == null)
+            session = new LoginSession();
+
+        return session;
     }
 
-    public boolean loginUser(int id, Enum userType) {
-        this.userType = userType;
+    public boolean loginUser(int id) {
         try {
-            if (userType == UserTypes.CUSTOMER) {
-                this.user = new Customer(this.dbConn.getCustomerById(id));
-            }
-            else if (userType == UserTypes.DELIVERYMAN) {
-                this.user = new DeliveryMan(this.dbConn.getDeliveryManById(id));
-            }
-            else {
-                return false;
-            }
+            UserLogic userlogic = new UserLogic();
+            User loggedUser = userlogic.getUserById(id);
+
+            this.user = loggedUser;
+
             return true;
 
         } catch (Exception e) {
@@ -39,7 +30,7 @@ public class LoginSession {
         }
     }
 
-    public Person getUser() {
-        return user;
+    public void logout() {
+        this.user = null;
     }
 }

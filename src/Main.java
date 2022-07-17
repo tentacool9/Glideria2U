@@ -1,19 +1,23 @@
 package src;
 
-import src.model.LoginDetails;
-import src.view.BaseWindow;
+import src.logic.LoginSession;
+import src.common.model.LoginDetails;
 import src.view.LoginWindow;
+import src.view.MainAppWindow;
 
 import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
         LoginWindow loginWindow = new LoginWindow((LoginDetails loginDetails) -> {
-            BaseWindow dialog = new BaseWindow("Success!");
-            dialog.setSize(200, 100);
-            dialog.getContentPane().add(new JLabel("Connected with id " + loginDetails.id));
-
-            dialog.showWindow();
+            if (LoginSession.getSession().loginUser(loginDetails.id)) {
+                MainAppWindow appWindow = new MainAppWindow();
+                appWindow.showWindow();
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(new JFrame(), "User not found, try again", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
         });
 
         loginWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

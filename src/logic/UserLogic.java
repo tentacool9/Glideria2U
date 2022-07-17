@@ -1,18 +1,22 @@
 package src.logic;
 
-import src.model.Customer;
-import src.model.Order;
-
-import java.util.ArrayList;
+import src.common.exceptions.UserDoesntExistException;
+import src.dal.UserDAL;
+import src.common.model.User;
 
 public class UserLogic {
-    private Customer user;
-    private OrdersLogic ordersLogic;
-    public UserLogic(LoginSession loginSession) {
-        this.ordersLogic = new OrdersLogic();
+    private UserDAL userDAL;
+
+    public UserLogic() {
+        this.userDAL = new UserDAL();
     }
 
-    public ArrayList<Order> getAllOrders() {
-        return this.ordersLogic.getByDeliveryManId(this.user.getId());
+    public User getUserById(int userId) throws UserDoesntExistException {
+        User user = this.userDAL.getUserById(userId);
+
+        if (user == null)
+            throw new UserDoesntExistException();
+
+        return user;
     }
 }

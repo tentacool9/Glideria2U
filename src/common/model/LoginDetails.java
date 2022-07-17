@@ -1,4 +1,4 @@
-package src.model;
+package src.common.model;
 
 public class LoginDetails {
     public int id;

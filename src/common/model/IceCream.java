@@ -1,24 +1,17 @@
-package src.model;
+package src.common.model;
+import src.common.enums.IceCreamContainer;
+import src.common.enums.IceCreamFlavor;
+
 import java.util.ArrayList;
-
-enum IceCreamFlavor {
-    CHOCOLATE,
-    VANILLA,
-    MOCA,
-    CARAMEL
-}
-
-enum IceCreamContainer {
-    CONE,
-    CUP
-}
+import java.util.List;
 
 public class IceCream extends Item {
-    private ArrayList<IceCreamFlavor> flavors;
+    private List<IceCreamFlavor> flavors;
     private IceCreamContainer container;
 
-    public IceCream(int price, int orderId, IceCreamContainer container, int numOfFlavors) {
-        super(price, orderId);
+    public IceCream(int price, IceCreamContainer container, int numOfFlavors) {
+        super(price * numOfFlavors);
+
         this.container = container;
         this.flavors = new ArrayList<IceCreamFlavor>();
     }
@@ -27,7 +20,7 @@ public class IceCream extends Item {
         this.flavors.add(flavor);
     }
 
-    public ArrayList<IceCreamFlavor> getFlavors() {
+    public List<IceCreamFlavor> getFlavors() {
         return this.flavors;
     }
 

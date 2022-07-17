@@ -1,12 +1,13 @@
 package src.view;
 
-import src.model.LoginDetails;
+import src.common.model.LoginDetails;
 
 import javax.swing.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class LoginWindow extends BaseWindow {
-    public LoginWindow(Consumer<LoginDetails> onLogin) {
+    public LoginWindow(Function<LoginDetails, Boolean> onLogin) {
         super("Login");
 
         JLabel idLabel = new JLabel("id");
@@ -22,7 +23,9 @@ public class LoginWindow extends BaseWindow {
                         return;
 
                     LoginDetails loginDetails = new LoginDetails(Integer.parseInt(id));
-                    onLogin.accept(loginDetails);
+                    if (onLogin.apply(loginDetails)) {
+                        this.setVisible(false);
+                    }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this,
                             "id has to be a number, try again",
@@ -31,8 +34,8 @@ public class LoginWindow extends BaseWindow {
                 }
         });
 
-        addComponent(idLabel);
-        addComponent(idTextField);
-        addComponent(loginButton);
+        add(idLabel);
+        add(idTextField);
+        add(loginButton);
     }
 }

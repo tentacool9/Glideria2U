@@ -1,33 +1,23 @@
-package src.model;
+package src.common.model;
+
+import src.common.enums.Fruit;
+import src.common.enums.ShakeBase;
 
 import java.util.ArrayList;
-
-enum Fruit {
-    BANANA,
-    STRAWBERRY,
-    MELON,
-    MANGO,
-    WATERMELON
-}
-
-enum ShakeBase {
-    MILK,
-    SOY_MILK,
-    ORANGE_JUICE,
-    WATER
-}
+import java.util.List;
 
 public class Shake extends Item {
-    private ArrayList<Fruit> fruits;
+    private List<Fruit> fruits;
     private ShakeBase base;
 
-    public Shake(int price, int orderId, ShakeBase base) {
-        super(price, orderId);
+    public Shake(int price, ShakeBase base) {
+        super(price);
+
         this.base = base;
         this.fruits = new ArrayList<Fruit>();
     }
 
-    public ArrayList<Fruit> getFruits() {
+    public List<Fruit> getFruits() {
         return this.fruits;
     }
 

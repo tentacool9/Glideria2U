@@ -1,10 +1,10 @@
-package src.model;
+package src.common.model;
 
-public abstract class Person {
-    private int id;
-    private String name;
+public abstract class User {
+    protected int id;
+    protected String name;
 
-    public Person(int id, String name) {
+    public User(int id, String name) {
         this.id = id;
         this.name = name;
     }

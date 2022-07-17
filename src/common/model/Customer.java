@@ -1,20 +1,16 @@
-package src.model;
+package src.common.model;
 
-public class Customer extends Person{
+public class Customer extends User {
     private String phoneNumber;
     private String deliveryAddress;
 
     public Customer(int id, String name,  String deliveryAddress, String phoneNumber) {
-        super(id,name);
+        super(id, name);
+
         this.phoneNumber = phoneNumber;
         this.deliveryAddress = deliveryAddress;
     }
 
-    public Customer(Customer customer) {
-        super(customer.getId(),customer.getName());
-        this.phoneNumber = customer.getPhoneNumber();
-        this.deliveryAddress = customer.getDeliveryAddress();
-    }
     public String getPhoneNumber() {
         return phoneNumber;
     }

@@ -6,27 +6,20 @@ import java.awt.*;
 import java.util.Collection;
 
 public class BaseWindow extends JFrame {
-    protected int windowPadding = 10;
+    protected final int DEFAULT_PADDING = 10;
 
     public BaseWindow(String title) {
         super(title);
         this.setLayout(new BorderLayout());
 
-        JPanel contentPanel = new JPanel();
+        this.setWindowPadding(DEFAULT_PADDING);
+    }
 
+    public void setWindowPadding(int windowPadding) {
+        JPanel contentPanel = new JPanel();
         Border padding = BorderFactory.createEmptyBorder(windowPadding, windowPadding, windowPadding, windowPadding);
         contentPanel.setBorder(padding);
         this.setContentPane(contentPanel);
-    }
-
-    protected void addComponent(JComponent component) {
-        this.getContentPane().add(component);
-    }
-
-    protected void addComponents(Collection<JComponent> components) {
-        components.forEach((component) -> {
-           addComponent(component);
-        });
     }
 
     public void showWindow() {

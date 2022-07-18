@@ -1,5 +1,7 @@
 package src.common.model;
 
+import src.common.annotations.DisplayName;
+
 abstract public class Item {
     protected int price;
 

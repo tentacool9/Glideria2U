@@ -1,10 +1,12 @@
 package src.common.model;
+import src.common.annotations.DisplayName;
 import src.common.enums.IceCreamContainer;
 import src.common.enums.IceCreamFlavor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@DisplayName("Ice Cream")
 public class IceCream extends Item {
     private List<IceCreamFlavor> flavors;
     private IceCreamContainer container;
@@ -30,5 +32,13 @@ public class IceCream extends Item {
 
     public void setContainer(IceCreamContainer container) {
         this.container = container;
+    }
+
+    @Override
+    public String toString() {
+        final String flavorsString =
+                flavors.stream().map(flavor -> flavor.toString()).reduce("", (acc, val) -> acc + ", "  + val);
+
+        return String.format("Ice cream with %s in a %s", flavorsString, container.toString());
     }
 }

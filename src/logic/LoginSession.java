@@ -30,6 +30,10 @@ public class LoginSession {
         }
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void logout() {
         this.user = null;
     }

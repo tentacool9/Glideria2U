@@ -2,61 +2,92 @@ package src.view;
 
 import src.common.annotations.DisplayName;
 import src.common.model.IceCream;
+import src.common.model.Item;
+import src.common.model.Order;
 import src.common.model.Shake;
 import src.common.utils.CustomComponents;
 import src.common.utils.JListUtils;
+import src.common.utils.StringUtils;
+import src.logic.LoginSession;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.util.List;
 import java.util.Arrays;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static src.common.utils.CustomComponents.*;
 
 public class NewOrderWindow extends BaseWindow {
-    public NewOrderWindow() {
+    public static Class[] availableItems = new Class[] {IceCream.class, Shake.class};
+
+    public NewOrderWindow(Consumer<Order> finishOrder) {
         super("New Order");
 
-        this.setLayout(new BorderLayout());
+        this.setLayout( new GridLayout(1, 2));
         this.setMinimumSize(new Dimension(500, 400));
 
-        JTabbedPane stages = new JTabbedPane();
-
-        JPanel basicDetailsTab = new JPanel(new GridBagLayout());
-        JPanel itemsTab = new JPanel();
-        JPanel summaryTab = new JPanel();
+        JPanel basicDetailsSection = new JPanel(new GridBagLayout());
+        JPanel itemsSection = new JPanel();
+        JPanel summarySection = new JPanel();
 
 
         JTextField address = new JTextField("", 16);
-        basicDetailsTab.add(labelComponent("Address", address));
+        basicDetailsSection.add(labelComponent("Address", address));
 
-        stages.addTab("Order Details", basicDetailsTab);
+        JList itemOptions = new JList(Arrays.stream(availableItems).map(StringUtils::getDisplayName).toArray());
 
-        Class[] availableItems = new Class[] {IceCream.class, Shake.class};
+        itemsSection.add(labelComponent("Available items", itemOptions));
 
-        JList itemOptions = new JList(Arrays.stream(availableItems).map(c -> {
-            if (c.isAnnotationPresent(DisplayName.class)) {
-                DisplayName displayName = (DisplayName) c.getAnnotation(DisplayName.class);
-                return displayName.value();
-            }
+        DefaultListModel finalOrderItems = new DefaultListModel();
+        JList finalOrderItemsList = new JList(finalOrderItems);
+        finalOrderItemsList.setSelectionModel(new NoSelectionModel());
+        finalOrderItemsList.setBackground(new Color(0,0,0,0));
 
-            return c.getSimpleName();
-        }).toArray());
+        JPanel leftPane = new JPanel(new BorderLayout());
+        leftPane.add(basicDetailsSection, BorderLayout.NORTH);
+        leftPane.add(itemsSection);
+        add(leftPane);
 
-        itemsTab.add(labelComponent("Available items", itemOptions));
+        summarySection.add(labelComponent("Order Summary", finalOrderItemsList));
 
-        JList finalOrderItems = new JList();
-        finalOrderItems.setSelectionModel(new NoSelectionModel());
+        JButton finishOrderBtn = new JButton("Finish Order");
+        finishOrderBtn.setEnabled(false);
 
-        JLabel orderSummary = new JLabel();
+        finishOrderBtn.addActionListener(e -> {
+            List<Item> finalItems = Arrays.stream(finalOrderItems.toArray()).map(o -> (Item)o).collect(Collectors.toList());
+            Order newOrder = new Order();
+            newOrder.setUser(LoginSession.getSession().getUser());
+            newOrder.setItems(finalItems);
+            newOrder.setAddress(address.getText());
 
-        finalOrderItems.addListSelectionListener(e -> {
-            orderSummary.setText("<html>" + JListUtils.getItems(finalOrderItems).stream().reduce("", (acc, val) -> acc + "<br/>" + val) + "</html>");
+            finishOrder.accept(newOrder);
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
 
-        stages.addTab("Items", itemsTab);
+        JButton addNewItemBtn = new JButton("Add");
+        addNewItemBtn.addActionListener(e -> {
+            try {
+                Class selectedItemClass = availableItems[itemOptions.getSelectedIndex()];
+                JPanel inputPanel =  ((Item)selectedItemClass.getDeclaredConstructor().newInstance()).getInputPanel((Item item) -> {
+                    finalOrderItems.addElement(item);
+                    finishOrderBtn.setEnabled(true);
+                });
 
-        stages.addTab("Summary", summaryTab);
+                ItemDetailsWindow newItemWindow = new ItemDetailsWindow(selectedItemClass, inputPanel);
+                newItemWindow.showWindow();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        });
 
-        add(stages);
+        itemsSection.add(addNewItemBtn);
+
+        JPanel rightPane = new JPanel(new BorderLayout());
+        rightPane.add(summarySection);
+        rightPane.add(finishOrderBtn, BorderLayout.SOUTH);
+        add(rightPane);
     }
 }

@@ -1,5 +1,8 @@
 package src.view;
 
+import src.common.model.Order;
+import src.logic.OrderLogic;
+
 import javax.swing.*;
 
 public class MainAppWindow extends BaseWindow {
@@ -9,7 +12,10 @@ public class MainAppWindow extends BaseWindow {
 
         JButton orderBtn = new JButton("Order");
         orderBtn.addActionListener(e -> {
-            NewOrderWindow newOrder = new NewOrderWindow();
+            NewOrderWindow newOrder = new NewOrderWindow((Order order) -> {
+                OrderLogic orderLogic = new OrderLogic();
+                orderLogic.addOrder(order);
+            });
             newOrder.showWindow();
         });
         JButton myOrders = new JButton("My Orders");

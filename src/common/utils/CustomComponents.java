@@ -9,6 +9,7 @@ public class CustomComponents {
         labeledComponent.setLayout(new BoxLayout(labeledComponent, BoxLayout.Y_AXIS));
 
         JLabel labelComponent = new JLabel(label);
+        labelComponent.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         labeledComponent.add(labelComponent);
         labeledComponent.add(component);

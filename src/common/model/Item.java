@@ -2,18 +2,14 @@ package src.common.model;
 
 import src.common.annotations.DisplayName;
 
+import javax.swing.*;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 abstract public class Item {
-    protected int price;
+    public Item() {};
 
-    public Item(int price) {
-        this.price = price;
-    }
+    public abstract int getPrice();
 
-    public int getPrice() {
-        return this.price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
+    public abstract JPanel getInputPanel(Consumer<Item> createItem);
 }

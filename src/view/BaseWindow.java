@@ -1,5 +1,7 @@
 package src.view;
 
+import src.logic.LoginSession;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -27,4 +29,5 @@ public class BaseWindow extends JFrame {
         setLocationRelativeTo(null);
         this.setVisible(true);
     }
+
 }

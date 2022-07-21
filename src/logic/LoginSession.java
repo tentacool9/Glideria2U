@@ -16,6 +16,10 @@ public class LoginSession {
         return session;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public boolean loginUser(int id) {
         try {
             UserLogic userlogic = new UserLogic();

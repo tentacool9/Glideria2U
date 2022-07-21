@@ -1,12 +1,9 @@
 package src.view;
 
-import src.common.annotations.DisplayName;
 import src.common.model.IceCream;
 import src.common.model.Item;
 import src.common.model.Order;
 import src.common.model.Shake;
-import src.common.utils.CustomComponents;
-import src.common.utils.JListUtils;
 import src.common.utils.StringUtils;
 import src.logic.LoginSession;
 
@@ -33,11 +30,11 @@ public class NewOrderWindow extends BaseWindow {
         JPanel itemsSection = new JPanel();
         JPanel summarySection = new JPanel();
 
-
         JTextField address = new JTextField("", 16);
         basicDetailsSection.add(labelComponent("Address", address));
 
         JList itemOptions = new JList(Arrays.stream(availableItems).map(StringUtils::getDisplayName).toArray());
+        JButton addNewItemBtn = new JButton("Add");
 
         itemsSection.add(labelComponent("Available items", itemOptions));
 
@@ -67,7 +64,6 @@ public class NewOrderWindow extends BaseWindow {
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
 
-        JButton addNewItemBtn = new JButton("Add");
         addNewItemBtn.addActionListener(e -> {
             try {
                 Class selectedItemClass = availableItems[itemOptions.getSelectedIndex()];

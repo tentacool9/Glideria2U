@@ -1,5 +1,6 @@
 package src.dal;
 
+import src.common.model.DeliveryMan;
 import src.common.model.Order;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OrderDAL extends BaseDAL {
-    private static final List<Order> orders = new ArrayList<>();
+    private static final List<Order> orders = new ArrayList<>() {};
 
     public OrderDAL() { }
 

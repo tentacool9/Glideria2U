@@ -4,7 +4,10 @@ import src.common.enums.IceCreamContainer;
 import src.common.enums.IceCreamFlavor;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.util.*;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -102,6 +105,9 @@ public class IceCream extends Item {
                 createItem.accept(new IceCream(
                         selectedContainer, finalFlavors
                 ));
+
+                Window inputWindow = SwingUtilities.getWindowAncestor(inputPanel);
+                inputWindow.dispatchEvent(new WindowEvent(inputWindow, WindowEvent.WINDOW_CLOSING));
             }
         });
 

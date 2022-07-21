@@ -1,11 +1,14 @@
 package src.common.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Order {
-    private int id;
+    private UUID id;
     private List<Item> items;
     private String address;
     private Date date;
@@ -14,20 +17,26 @@ public class Order {
     private boolean hasArrived;
 
     public Order() {
-        this.id = (int)Math.round(Math.random() * 100000);
+        this.id = UUID.randomUUID();
         this.items = new ArrayList<>();
         this.hasArrived = false;
+        this.date = new Date();
+    }
+
+    public Order(User user) {
+        this();
+        this.user = user;
     }
 
     public float getTotalPrice() {
         return items.stream().map(i -> i.getPrice()).reduce(0, Integer::sum);
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -69,5 +78,12 @@ public class Order {
 
     public void setDeliveryMan(DeliveryMan deliveryMan) {
         this.deliveryMan = deliveryMan;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+
+        return String.format("(%s) %s - %d items", this.id.toString().substring(0, 8), dateFormat.format(this.date), this.items.size());
     }
 }

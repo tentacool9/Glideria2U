@@ -1,5 +1,7 @@
 package src.view;
 
+import src.logic.LoginSession;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;

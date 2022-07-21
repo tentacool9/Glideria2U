@@ -18,7 +18,7 @@ public class UserDAL extends BaseDAL {
             add(new DeliveryMan(200062515, "Bravo Brave", 1400));
 
             add(new Customer(1, "Itay Habani", "Netzah Israel 25", "0538882545"));
-            add(new Customer(244962319, "George Boi", "Hazait 58 Raanana", "0549526488"));
+            add(new Customer(2, "David Schiff", "Rambam 58 Raanana", "0549546488"));
             add(new Customer(207666519, "Bane Garrison", "Hahar 58 Raanana", "0529546488"));
             add(new Customer(207922516, "Gauss Linear", "Rashi 58 Raanana", "0555546488"));
             add(new Customer(202962519, "Brian Heartly", "Lev 58 Raanana", "0549546433"));

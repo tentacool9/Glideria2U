@@ -1,6 +1,7 @@
 package src.view;
 
 import src.common.model.LoginDetails;
+import src.logic.LoginSession;
 
 import javax.swing.*;
 import java.util.function.Consumer;
@@ -23,6 +24,8 @@ public class LoginWindow extends BaseWindow {
                         return;
 
                     LoginDetails loginDetails = new LoginDetails(Integer.parseInt(id));
+                    LoginSession.getSession().loginUser(loginDetails.id);
+
                     if (onLogin.apply(loginDetails)) {
                         this.setVisible(false);
                     }

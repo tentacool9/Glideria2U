@@ -11,6 +11,8 @@ import java.awt.*;
 public class MainAppWindow extends BaseWindow {
     public MainAppWindow() {
         super("Glideria2U");
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         this.setWindowPadding(40);
 
         JButton orderBtn = new JButton("Order");

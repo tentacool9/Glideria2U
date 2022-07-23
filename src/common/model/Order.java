@@ -19,13 +19,16 @@ public class Order {
     public Order() {
         this.id = UUID.randomUUID();
         this.items = new ArrayList<>();
-        this.hasArrived = false;
         this.date = new Date();
+        this.hasArrived = false;
     }
 
-    public Order(User user) {
+    public Order(String address, List<Item> items, User user, DeliveryMan deliveryMan) {
         this();
+        this.address = address;
+        this.items = items;
         this.user = user;
+        this.deliveryMan = deliveryMan;
     }
 
     public float getTotalPrice() {

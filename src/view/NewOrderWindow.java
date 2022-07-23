@@ -1,11 +1,9 @@
 package src.view;
 
-import src.common.model.IceCream;
-import src.common.model.Item;
-import src.common.model.Order;
-import src.common.model.Shake;
+import src.common.model.*;
 import src.common.utils.StringUtils;
 import src.logic.LoginSession;
+import src.logic.UserLogic;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,6 +53,7 @@ public class NewOrderWindow extends BaseWindow {
 
         finishOrderBtn.addActionListener(e -> {
             List<Item> finalItems = Arrays.stream(finalOrderItems.toArray()).map(o -> (Item)o).collect(Collectors.toList());
+
             Order newOrder = new Order();
             newOrder.setUser(LoginSession.getSession().getUser());
             newOrder.setItems(finalItems);
@@ -67,7 +66,7 @@ public class NewOrderWindow extends BaseWindow {
         addNewItemBtn.addActionListener(e -> {
             try {
                 Class selectedItemClass = availableItems[itemOptions.getSelectedIndex()];
-                JPanel inputPanel =  ((Item)selectedItemClass.getDeclaredConstructor().newInstance()).getInputPanel((Item item) -> {
+                JPanel inputPanel = ((Item)selectedItemClass.getDeclaredConstructor().newInstance()).getInputPanel((Item item) -> {
                     finalOrderItems.addElement(item);
                     finishOrderBtn.setEnabled(true);
                 });

@@ -1,5 +1,6 @@
 package src.view;
 
+import src.common.exceptions.NoAvailableDeliveryMenException;
 import src.common.model.*;
 import src.common.utils.StringUtils;
 import src.logic.LoginSession;
@@ -10,6 +11,7 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -54,13 +56,28 @@ public class NewOrderWindow extends BaseWindow {
         finishOrderBtn.addActionListener(e -> {
             List<Item> finalItems = Arrays.stream(finalOrderItems.toArray()).map(o -> (Item)o).collect(Collectors.toList());
 
-            Order newOrder = new Order();
-            newOrder.setUser(LoginSession.getSession().getUser());
-            newOrder.setItems(finalItems);
-            newOrder.setAddress(address.getText());
+            try {
+                UserLogic userlogic = new UserLogic();
+                List<DeliveryMan> availableDeliveryMen = userlogic.getAvailableDeliveryMan();
 
-            finishOrder.accept(newOrder);
-            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                Random rand = new Random();
+                int wow = rand.nextInt(availableDeliveryMen.size());
+                DeliveryMan chosenDeliveryMan = availableDeliveryMen.get(wow);
+
+                Order newOrder = new Order(address.getText(), finalItems, LoginSession.getSession().getUser(), chosenDeliveryMan);
+                chosenDeliveryMan.setAvailable(false);
+                userlogic.setUser(chosenDeliveryMan);
+
+                finishOrder.accept(newOrder);
+                this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            }
+            catch (NoAvailableDeliveryMenException ex) {
+                JOptionPane.showMessageDialog(new BaseWindow("Error!"), ex.getMessage());
+                System.out.println(ex.getMessage());
+            }
+            catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
         });
 
         addNewItemBtn.addActionListener(e -> {

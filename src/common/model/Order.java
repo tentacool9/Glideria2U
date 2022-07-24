@@ -83,6 +83,14 @@ public class Order {
         this.deliveryMan = deliveryMan;
     }
 
+    public boolean getHasArrived() {
+        return this.hasArrived;
+    }
+
+    public void setHasArrived(boolean hasArrived) {
+        this.hasArrived = hasArrived;
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");

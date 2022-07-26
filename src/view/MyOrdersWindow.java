@@ -10,10 +10,10 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
 
+import static src.common.utils.Comparators.sortOrdersByLatest;
 import static src.common.utils.CustomComponents.labelComponent;
 
 public class MyOrdersWindow extends BaseWindow {
-
     public MyOrdersWindow() {
         super("My Orders");
 
@@ -24,9 +24,13 @@ public class MyOrdersWindow extends BaseWindow {
         OrderLogic orderLogic = new OrderLogic();
         List ordersByDeliveryMan = orderLogic.getOrdersByDeliveryManId(currentUser.getId());
 
-        JList orders = new JList(ordersByDeliveryMan.stream().map(order -> order.toString()).toArray());
-        orders.setSelectionModel(new CustomComponents.NoSelectionModel());
+        if (ordersByDeliveryMan.size() == 0) {
+            add(new JLabel("You currently don't have any orders"));
+        } else {
+            JList orders = new JList(ordersByDeliveryMan.stream().sorted(sortOrdersByLatest).map(order -> order.toString()).toArray());
+            orders.setSelectionModel(new CustomComponents.NoSelectionModel());
 
-        add(labelComponent("Orders for: " + currentUser.getName(), orders));
+            add(labelComponent("Orders for: " + currentUser.getName(), orders));
+        }
     }
 }

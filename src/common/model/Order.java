@@ -1,11 +1,13 @@
 package src.common.model;
 
+import src.common.Global;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static src.common.utils.StringUtils.getDisplayName;
 
 public class Order {
     private UUID id;
@@ -93,8 +95,17 @@ public class Order {
 
     @Override
     public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+        Map<String, Long> itemsCounter = this.items.stream()
+                .collect(Collectors.groupingBy(i -> getDisplayName(i.getClass()), Collectors.counting()));
 
-        return String.format("(%s) %s - %d items", this.id.toString().substring(0, 8), dateFormat.format(this.date), this.items.size());
+        String itemsString = itemsCounter.entrySet().stream()
+                .map(entry -> (entry.getValue() == 1 ? entry.getKey() : String.format("%d %ss", entry.getValue(), entry.getKey())))
+                .reduce("", (acc, val) -> acc.length() > 0 ? acc + ", " + val : val);
+
+        if (itemsCounter.keySet().size() > 1)
+            itemsString = String.format("%d items: %s", this.items.size(), itemsString);
+
+        return String.format("(%s) Order to %s with %s",
+                Global.dateFormat.format(this.date), this.address, itemsString);
     }
 }

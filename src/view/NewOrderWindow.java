@@ -24,7 +24,7 @@ public class NewOrderWindow extends BaseWindow {
         super("New Order");
 
         this.setLayout( new GridLayout(1, 2));
-        this.setMinimumSize(new Dimension(500, 400));
+        this.setMinimumSize(new Dimension(900, 400));
 
         JPanel basicDetailsSection = new JPanel(new GridBagLayout());
         JPanel itemsSection = new JPanel();
